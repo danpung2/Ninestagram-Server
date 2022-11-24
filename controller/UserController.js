@@ -1,3 +1,5 @@
+const crypto = require("crypto");
+
 const db = require("../models");
 const userRepository = db.user;
 
@@ -23,10 +25,12 @@ exports.create = (req, res) => {
         return;
     }
 
+    const createHashedPassword = crypto.createHash("sha512").update(req.body.password).digest("base64");
+
     const newUser = {
         email: req.body.email,
         nickname: req.body.nickname,
-        password: req.body.password,
+        password: createHashedPassword,
         createDate: Date.now()
     };
 
