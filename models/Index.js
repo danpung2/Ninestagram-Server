@@ -38,6 +38,10 @@ db.user.hasMany(db.comment, {
     foreignKey: 'fk_userId',
     onDelete: 'cascade'
 });
+db.user.hasOne(db.banList, {
+    foreignKey: 'fk_userId',
+    onDelete: 'cascade'
+});
 db.user.hasOne(db.followerList, {
     foreignKey: 'fk_userId',
     onDelete: 'cascade'
