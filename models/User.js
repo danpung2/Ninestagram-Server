@@ -23,17 +23,5 @@ module.exports = function (sequelize, DataTypes) {
             tableName: 'user',
         }
     );
-    user.associate = function (models) {
-        models.user.hasMany(models.article, {
-            foreignKey: 'fk_userId',
-            onDelete: 'cascade'
-        });
-    };
-    user.associate = function (models) {
-        models.user.hasMany(models.comment, {
-            foreignKey: 'fk_userId',
-            onDelete: 'cascade'
-        });
-    };
     return user;
 };

@@ -23,11 +23,6 @@ module.exports = function (sequelize, DataTypes) {
             tableName: 'comment'
         }
     );
-    comment.associate = function (models) {
-        models.comment.hasMany(models.reply, {
-            foreignKey: 'fk_commentId',
-            onDelete: 'cascade'
-        });
-    };
+
     return comment;
 };
