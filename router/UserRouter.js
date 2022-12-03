@@ -5,6 +5,7 @@ module.exports = app => {
     let router = require("express").Router();
 
     app.use("/api/user", router);
+    router.post("/login", userController.login);
     router.get("/:id", userController.findOne);
     // router.get("/:id", userController.findAll);
     router.post("/", userController.create);

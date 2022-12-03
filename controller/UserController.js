@@ -61,7 +61,32 @@ exports.findOne = (req, res) => {
         })
         .catch(err => {
             console.error(err);
+        });
+}
+
+exports.login = (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    userRepository.findOne({where: {email: email}, raw: true, nest: true})
+        .then((data) => {
+            const createHashedPassword = crypto.createHash("sha512").update(password).digest("base64");
+            if(createHashedPassword == data.password){
+                res.cookie('userId', data.userId);
+                res.cookie('nickname', data.nickname, {
+                    maxAge:60*60*1000,
+                    path:"/"
+                });
+                res.send(data);
+            }
+            else
+                throw new Error("no data");
         })
+        .catch(err => {
+            res.status(500);
+            res.json({message: err.message});
+            console.error(err);
+        });
+
 }
 
 exports.changePassword = (req, res) => {
