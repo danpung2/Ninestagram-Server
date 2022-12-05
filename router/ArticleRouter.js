@@ -5,8 +5,8 @@ module.exports = app => {
     let router = require("express").Router();
 
     app.use("/api/article", router);
-    router.get("/:id", articleController.findOne);
-    router.get("/", articleController.findAll);
+    // router.get("/:id", articleController.findOne);
+    router.get("/:id", articleController.getAllArticle);
     router.post("/", articleController.create);
     router.put("/", articleController.changeContent);
     router.put("/likeAdd/:articleId", articleController.likeCountAdd);
