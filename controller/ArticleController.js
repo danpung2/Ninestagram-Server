@@ -29,7 +29,7 @@ exports.create = (req, res) => {
 
 exports.getAllArticle = async (req, res) => {
     const userId = req.params.id;
-    const query = `select * from articles where user_id in (select following_user_id from following_lists where user_id = ${userId}) or user_id = ${userId} order by create_date`;
+    const query = `select * from articles where user_id in (select following_user_id from following_lists where user_id = ${userId}) or user_id = ${userId} order by create_date desc`;
     const result = await sequelize.query(query, { type: QueryTypes.SELECT });
     res.send(result);
 }
