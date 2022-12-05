@@ -1,4 +1,5 @@
 const db = require("../models");
+const { QueryTypes } = require("sequelize");
 const articleRepository = db.article;
 
 exports.create = (req, res) => {
@@ -25,14 +26,12 @@ exports.create = (req, res) => {
         });
 }
 
-exports.findAll = (req, res) => {
-    articleRepository.findAll({raw: true, nest: true, order: [['create_date', 'DESC']]})
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            console.error(err);
-        });
+exports.findAll = async (req, res) => {
+    const userId = req.params.id;
+    const query = `select * from articles where user_id in (select following_list_id from following_lists where user_id = ${userId}) or user_id = ${userId} order by create_date`;
+    const result = await sequelize.query(query, { type: QueryTypes.SELECT });
+
+    res.send(result);
 }
 
 exports.findOne = (req, res) => {
